@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content%}
+{% if error %}
+<p>錯誤訊息：{{error}}</p>
+{% else %}
+<p>恭喜，註冊成功。</p>
+{% endif %}
+<p><a href=/pages/>回首頁</a></p>
+
+{% endblock %}

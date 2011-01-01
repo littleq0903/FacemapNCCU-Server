@@ -1,0 +1,27 @@
+application: facemapnccu
+version: 1
+runtime: python
+api_version: 1
+
+handlers:
+- url: /
+  script: handlers.py
+
+- url: /pages/.*
+  script: handlerOfPages.py
+
+- url: /apis/.*
+  script: handlerOfAPIs.py
+  
+- url: /css
+  static_dir: css
+  
+- url: /js
+  static_dir: js
+  
+- url: /images
+  static_dir: images
+  
+builtins:
+- datastore_admin: on
+  

@@ -1,0 +1,74 @@
+<html>
+<head>
+	<title>Facemap{% if title %} - {% endif %}{{title}}</title>
+	<script src="/js/jquery-1.4.4.js"></script>
+	<script src="http://connect.facebook.net/en_US/all.js"></script> 
+	<style type="text/css">
+	#rootFrame
+	{
+		width: 800px;
+		margin: auto;
+	}
+	#wrapper
+	{
+		width: 800px;
+	}
+	#topFrame
+	{
+		width: 800px;
+		height: 100px;
+		background-color: #3B5998;
+		color: #FFFFFF;
+	}
+	#menubar
+	{
+		list-style-type: none;
+	}
+	#menubar li
+	{
+		float: left;
+		margin-left: 2em;
+		margin-right: 2em;
+	}
+	#barFrame
+	{
+		width: 800px;
+		height: 100px;
+	}
+	#contentFrame
+	{
+		width: 800px;
+		height: 500px;
+		padding: 30px;
+	}
+	#bottomFrame
+	{
+		width: 800px;
+		height: 100px;
+	}
+	</style>
+</head>
+<body>
+<div id="rootFrame">
+<div id="wrapper">
+<div id="topFrame">
+<h1>Facemap@NCCU</h1>
+</div>
+<div id="barFrame">
+<ol id="menubar">
+<li><a href="register">Register</a></li>
+<li>Wall</li>
+<li>About</li>
+</ol>
+</div>
+<div id="contentFrame">
+{% block content %}
+{% endblock %}
+</div>
+<div id="bottomFrame">
+
+</div>
+</div>
+</div>
+</body>
+</html>

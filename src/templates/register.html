@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<script>
+	$(document).ready(function(){
+		$("#form_acc").focus();
+		
+	});
+</script>
+<style>
+	#school_accform label
+	{
+		display: block;
+		width: 70px;
+		float: left;
+		margin-right: 10px;
+		text-align: right;
+	}
+	#school_accform #submit
+	{
+		margin-left: 80px;
+	}
+</style>
+<div>
+<form id="school_accform" action="register?action=validated" method=post>
+<p><label for="form_acc">學校帳號</label><input id="form_acc" name=username>@nccu.edu.tw</p>
+<p><label for="form_pass">學校密碼</label><input id="form_pass" type=password name=password></p>
+<input id="submit" type=submit value=Login>
+</form>
+</table>
+
+
+</div>
+{% endblock %}

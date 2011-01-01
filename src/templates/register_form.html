@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+{% if schoolChecked %}
+
+<div>
+<div id="fb-root"></div>
+<style>
+	#theForm
+	{
+		width: 500px;
+	}
+	#theForm label
+	{
+		display: block;
+		margin-bottom: 3px;
+		font-size: 0.875em;
+	}
+</style>
+
+<div id=theForm>
+<p><label>學校帳號</label>{{schoolAccount}}@nccu.edu.tw</p>
+<p><label>Facebook帳號</label>
+<div id="user-info" style="display: none;"></div>
+<button id="login">Login</button>
+<button id="logout" style="display: none;">Logout</button>
+</p>
+
+<form id="register_form" action="register" method=post style="display: none;">
+<input type=hidden name=action value=finish>
+<input type=hidden name=form_school_id id=school_id value="{{schoolAccount}}">
+<p>
+	<label>系所</label>
+		<select name="form_depart" id="form_depart_input">
+			{{departOptions}}
+		</select>
+</p>
+<p>
+	<label>身分</label>
+	<select name="form_ident" id="form_ident_input">
+		<option value=1>學生</option>
+		<option value=2>教職員</option>
+	</select>
+</p>
+</form>
+</div>
+<div id=match_div style="display: none;"><button id="btn_match">註冊</button></div>
+
+<br>
+</div>
+
+
+<script>
+	$(document).ready(function(){
+		$('#btn_match').click(function(){
+			var prompt = "請確認以下資料：\n"
+			prompt += "學校帳號： " + $("#school_id").val() + "\n";
+			prompt += "Facebook名稱： " + $("#fbname").html() + "\n";
+			prompt += "系所： " + $("#form_depart_input option:selected").html() + "\n";
+			prompt += "身分： " + $("#form_ident_input option:selected").html();
+			if(confirm(prompt)){
+				$("#register_form").submit()
+			}
+			
+		});
+		
+	});
+
+	FB.init({'apikey':"{{APIKEY}}",
+		'cookie': true,
+		'status': true,
+		'appId':"{{APPID}}"});
+	FB.getLoginStatus(handleSessionResponse);
+	
+	$('#login').bind('click', function() {
+        FB.login(handleSessionResponse);
+      });
+	
+	$('#logout').bind('click', function(){
+		FB.logout(handleSessionResponse);
+	})
+	
+	function clearDisplay() {
+        $('#user-info').hide('fast');
+        $('#login').show('fast');
+        $("#logout").hide('fast');
+        $("#register_form").hide('fast');
+        $("#match_div").hide('fast');
+      }
+	
+	function handleSessionResponse(response) {
+        // if we dont have a session, just hide the user info
+        if (!response.session) {
+          clearDisplay();
+          return;
+        }
+
+        FB.api(
+          {
+            method: 'fql.query',
+            query: 'SELECT name, pic FROM profile WHERE id=' + FB.getSession().uid
+          },
+          function(response) {
+            var user = response[0];
+            $('#user-info').html('<img src="' + user.pic + '"><span id=fbname>' + user.name+'</span><br />(Not you?)').show('fast');
+            $("#register_form").show('fast');
+            $('#login').hide('fast');
+            $('#logout').show('fast');
+            $('#match_div').show('fast');
+          }
+        );
+      }
+</script>
+{% else %}
+{# school not validate, response error message. #}
+<p>Your school account is invalid, please check your username and password.</p>
+<form action=register method=post>
+	<button>Back</button>
+	<input type=hidden name=action value=agree>
+</form>
+
+
+
+{% endif %}
+
+
+{% endblock %}

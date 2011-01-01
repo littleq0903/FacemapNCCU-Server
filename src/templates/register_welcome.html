@@ -1,0 +1,31 @@
+{% extends 'register.html' %}
+{% block content %}
+<div id=div_license style="width:500px">
+	<div style="width:500px; margin:auto;">
+		<textarea style="height: 300px; width:500px">
+{{license}}
+		</textarea>
+	</div>
+</div>
+<div style="width:500px;">
+	<div style="margin: auto; text-align: center;">
+		<script>
+			$(document).ready(function(){
+				$("#btn_ok").click(function(){
+					$("#form_ok").submit();
+				});
+				$("#btn_no").click(function(){
+					$("#form_no").submit();
+				});
+			});
+		</script>
+		<button id="btn_ok">同意</button>
+		<button id="btn_no">不同意</button>
+		<form id="form_ok" action="register" method="post">
+			<input type=hidden name=action value="agree">
+		</form>
+		<form id="form_no" action="/pages" method=get>
+		</form>
+	</div>
+</div>
+{% endblock %}
