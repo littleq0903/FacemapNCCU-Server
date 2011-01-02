@@ -21,10 +21,11 @@
 	}
 </style>
 <div>
-<form id="school_accform" action="register?action=validated" method=post>
+<form id="school_accform" action="register" method=post>
+<input type=hidden name=action value=validated>
 <p><label for="form_acc">學校帳號</label><input id="form_acc" name=username>@nccu.edu.tw</p>
 <p><label for="form_pass">學校密碼</label><input id="form_pass" type=password name=password></p>
-<input id="submit" type=submit value=Login>
+<input id="submit" type=submit value="登入">
 </form>
 </table>
 

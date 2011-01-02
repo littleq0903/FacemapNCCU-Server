@@ -6,7 +6,7 @@
 {% if schoolChecked %}
 
 <div>
-<div id="fb-root"></div>
+
 <style>
 	#theForm
 	{
@@ -24,8 +24,8 @@
 <p><label>學校帳號</label>{{schoolAccount}}@nccu.edu.tw</p>
 <p><label>Facebook帳號</label>
 <div id="user-info" style="display: none;"></div>
-<button id="login">Login</button>
-<button id="logout" style="display: none;">Logout</button>
+<a id=login class="fb_button fb_button_medium"><span class="fb_button_text">登入</span></a>
+<a id=logout class="fb_button fb_button_medium" style="display: none;"><span class="fb_button_text">登出</span></a>
 </p>
 
 <form id="register_form" action="register" method=post style="display: none;">
@@ -71,7 +71,8 @@
 	FB.init({'apikey':"{{APIKEY}}",
 		'cookie': true,
 		'status': true,
-		'appId':"{{APPID}}"});
+		'appId':"{{APPID}}",
+		'xfbml': true});
 	FB.getLoginStatus(handleSessionResponse);
 	
 	$('#login').bind('click', function() {

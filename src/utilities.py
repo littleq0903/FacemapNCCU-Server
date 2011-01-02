@@ -1,6 +1,7 @@
 # coding: utf-8
 from google.appengine.ext.webapp import template
 from google.appengine.api import urlfetch
+from google.appengine.ext import db
 import simplejson as json
 import database
 import facebook
@@ -88,5 +89,24 @@ def getDepartOptions():
     
     return html
             
-    
+            
+def getFidsWithDepartments():
+    bundleToReturn = []
+    data = json.loads(open("departlist.json").read())
+    for college in data.keys():
+        for depart in data[college].keys():
+            if depart == 'name':
+                continue
+            temp = []
+            depart_id = college+depart
+            
+            query = database.members.gql("WHERE depart_id = :depart_id", depart_id = depart_id)
+            results = query.fetch(10)
+            temp = [result.fid for result in results]
+            temp.insert(0, depart_id)
+            temp.insert(0, data[college][depart].encode('utf-8'))
+            bundleToReturn.append(temp)
+            
+    return bundleToReturn
+            
     

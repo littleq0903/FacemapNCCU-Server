@@ -8,7 +8,7 @@ import logging
 class MainPage(webapp.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8'
-        bundle = tmBundle(title="首頁")
+        bundle = tmBundle(title="FaceMap@NCCU - 政大人的Facebook通訊錄")
         doRender(self, 'index', bundle)
         
 
@@ -66,10 +66,28 @@ class RegisterPage(webapp.RequestHandler):
             
             doRender(self, "register_finish", bundle)
                 
+class WallPage(webapp.RequestHandler):
+    def get(self):
+        bundle = tmBundle(title="政大牆")
+        action = self.request.get('action')
+        bundle.addProperty('list', getFidsWithDepartments())
+        doRender(self, 'wall', bundle)
         
+class ChatroomPage(webapp.RequestHandler):
+    def get(self):
+        bundle = tmBundle(title="政大聊天室")
+        doRender(self, 'chatroom', bundle)
+        
+class AboutPage(webapp.RequestHandler):
+    def get(self):
+        bundle = tmBundle(title="關於Facemap@NCCU")
+        doRender(self, 'about', bundle)
 
 sitemap = [('/pages/', MainPage),
-           ('/pages/register',RegisterPage)]
+           ('/pages/register', RegisterPage),
+           ('/pages/wall', WallPage),
+           ('/pages/chatroom', ChatroomPage),
+           ('/pages/about',AboutPage)]
 
 application = webapp.WSGIApplication(sitemap , debug=debugStatus())
 

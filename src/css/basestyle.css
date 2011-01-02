@@ -76,7 +76,15 @@ body
 	margin-bottom: 15px;
 	padding-bottom: 3px;
 }
-
+.post h3
+{
+	width: 250px;
+	font-size: 0.8em;
+	border-bottom: solid 3px #D80000;
+	margin: 0;
+	margin-bottom: 15px;
+	padding-bottom: 3px;
+}
 
 #footer
 {
@@ -93,4 +101,10 @@ body
 	font-size: 0.8em;
 	margin: 0;
 	
+}
+
+.memberlist img
+{
+	margin-right: 4px;
+	margin-bottom: 4px;
 }
