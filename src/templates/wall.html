@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<p>按照學校目錄排序。</p>
+
+{# for loop to enumerate each department #}
+{% for depart in list %}
+{% if depart|slice:"2:"%}
+<p style="font-size: 0.75em;width:250px; text-align:right; margin-bottom:-15px">更多</p>
+<h3>{{depart|slice:"1"|first}}</h3>
+
+<input type=hidden value="{{depart|slice:"2"|first}}">
+<div class="memberlist">
+	{# for loop to enumerate each member #}
+	{% for i in depart|slice:"2:" %}
+		<a href="/apis/rediecttofbbyfid?fid={{i}}" style="padding: 0;">
+		<img src="http://graph.facebook.com/{{i}}/picture?size=50x50" width=50 height=50>
+		</a>
+	{% endfor %}
+</div>
+
+{% endif %}
+{% endfor %}
+
+
+
+{% endblock %}
