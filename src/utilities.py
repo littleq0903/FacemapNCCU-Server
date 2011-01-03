@@ -2,7 +2,7 @@
 from google.appengine.ext.webapp import template
 from google.appengine.api import urlfetch
 from google.appengine.ext import db
-import simplejson as json
+from django.utils import simplejson as json
 import database
 import facebook
 import urllib
