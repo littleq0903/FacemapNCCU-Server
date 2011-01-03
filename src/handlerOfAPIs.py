@@ -33,12 +33,22 @@ class RedirectToFacebookByFIDHandler(webapp.RequestHandler):
             bundle.addProperty('title', '發生錯誤')
             doRender(self, 'error', bundle)
         
+class CheckUserHandler(webapp.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'text/plain; charset=utf-8';
+        fid = self.request.get("user")
+        result = database.members.gql("WHERE fid = :fid", fid = fid).fetch(1)
+        if result:
+            self.response.out.write("1")
+        else:
+            self.response.out.write("0")
         
             
         
 
 sitemap = [('/apis/validateSchool', ValidateSchoolAccountHandler ),
-           ('/apis/rediecttofbbyfid', RedirectToFacebookByFIDHandler)]
+           ('/apis/rediecttofbbyfid', RedirectToFacebookByFIDHandler),
+           ('/apis/checkuser',CheckUserHandler)]
 
 application = webapp.WSGIApplication(sitemap, debug=debugStatus())
 

@@ -57,7 +57,9 @@ class RegisterPage(webapp.RequestHandler):
                         bundle.addProperty("error", "連線到Facebook.com的過程中發生錯誤，請稍後重新再試。")
                     else:
                         logging.info("School id: %s just register with fid: %s"%(schoolid, fid))
-                        
+    
+                else:
+                    bundle.addProperty('error', "連線到Facebook時發生錯誤，請稍後再試。")
                     
 
             else:
@@ -68,15 +70,17 @@ class RegisterPage(webapp.RequestHandler):
                 
 class WallPage(webapp.RequestHandler):
     def get(self):
-        bundle = tmBundle(title="政大牆")
+        bundle = tmBundle(title="系所目錄")
         action = self.request.get('action')
         bundle.addProperty('list', getFidsWithDepartments())
         doRender(self, 'wall', bundle)
         
 class ChatroomPage(webapp.RequestHandler):
     def get(self):
-        bundle = tmBundle(title="政大聊天室")
-        doRender(self, 'chatroom', bundle)
+        bundle = tmBundle(title="政大塗鴉牆")
+        
+        
+        doRender(self, 'chatroom_test', bundle)
         
 class AboutPage(webapp.RequestHandler):
     def get(self):
