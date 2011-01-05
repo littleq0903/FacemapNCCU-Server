@@ -1,7 +1,7 @@
 body
 {
 	background-color: #3B5998;
-	
+	font-family: "Lucida Grande" "微軟正黑體";
 }
 
 #container
@@ -9,6 +9,7 @@ body
 	width: 760px;
 	margin: auto;
 	background: white;
+	padding: 0;
 }
 
 #header
@@ -103,8 +104,80 @@ body
 	
 }
 
+.memberlist
+{
+	overflow: hidden;
+}
+
 .memberlist img
 {
 	margin-right: 4px;
 	margin-bottom: 4px;
+}
+
+#facebook_status
+{
+	float: right;
+	margin: 0px;
+	width: 150px;
+	overflow: hidden;
+	margin-top: -30px;
+}
+
+.membercaption
+{
+	text-align:center;
+	font-size: 0.875em;
+	float: left;
+	width: 50px;
+	margin-left: 20px;
+	margin-bottom: 20px;
+}
+.membercaption img
+{
+	margin-bottom: 5px;
+}
+.membercaption p
+{
+	margin: 0;
+}
+.membercaption a
+{
+	text-decoration: none;
+}
+.membercaption p.caption
+{
+	height: 2em;
+	line-height: 1;
+}
+.wall_depart
+{
+	overflow: hidden;
+	padding-bottom: 10px;
+}
+.h3_more
+{
+	font-size: 0.75em;
+	width: 250px;
+	text-align: right;
+	margin-bottom: -15px;
+}
+.h2_more
+{
+	font-size: 0.875em;
+	margin-top: -40px;
+	width: 3em;
+	float: right;
+}
+.h2_more a
+{
+	text-decoration: none;
+}
+.wall_depart_detail
+{
+	padding-bottom: 10px;
+	
+}
+.h3_more a{
+	text-decoration: none;
 }
