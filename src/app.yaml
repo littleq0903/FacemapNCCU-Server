@@ -1,11 +1,9 @@
 application: facemapnccu
-version: 7
+version: 9
 runtime: python
 api_version: 1
 
 handlers:
-- url: /
-  script: handlers.py
 
 - url: /pages/.*
   script: handlerOfPages.py
@@ -29,6 +27,13 @@ handlers:
 - url: /remote_api
   script: $PYTHON_LIB/google/appengine/ext/remote_api/handler.py
   login: admin
+ 
+- url: /robots.txt
+  static_files: robots.txt
+  upload: robots.txt
+  
+- url: /.*
+  script: handlers.py
   
 builtins:
 - datastore_admin: on
