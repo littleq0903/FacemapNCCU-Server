@@ -3,7 +3,6 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 from utilities import *
-import logging
 
 class MainPage(webapp.RequestHandler):
     def get(self):
@@ -38,6 +37,8 @@ class RegisterPage(webapp.RequestHandler):
         elif action == 'finish':
             fid = getCurrentFacebookID(self)
             schoolid = self.request.get('form_school_id')
+            tors = self.request.get('form_ident')
+            depart_id = self.request.get("form_depart")
             bundle = tmBundle(title = "註冊 - 完成")
             bundle.addProperty("schoolAccount", schoolid)
             
@@ -48,15 +49,19 @@ class RegisterPage(webapp.RequestHandler):
                 if fid:
                     memberToStore = database.members(school_id=schoolid,
                                                      fid = fid,
-                                                     tors = int(self.request.get("form_ident")),
-                                                     depart_id = self.request.get("form_depart"))
+                                                     tors = int(tors),
+                                                     depart_id = depart_id)
                     try:
                         memberToStore.put()
                     except:
                         logging.error("Error occur at storing the data of student: %s", schoolid)
                         bundle.addProperty("error", "連線到Facebook.com的過程中發生錯誤，請稍後重新再試。")
                     else:
+                        memcache.delete("FidsWithDeparts")
+                        memcache.delete("depart_"+depart_id+"_"+str(tors))
+                        logging.info("Memcache flushed because of new register.")
                         logging.info("School id: %s just register with fid: %s"%(schoolid, fid))
+                        
     
                 else:
                     bundle.addProperty('error', "連線到Facebook時發生錯誤，請稍後再試。")
@@ -67,13 +72,30 @@ class RegisterPage(webapp.RequestHandler):
                 bundle.addProperty("error", "你的學校帳號已經被註冊過了，請聯絡系統管理員。")
             
             doRender(self, "register_finish", bundle)
+            
                 
 class WallPage(webapp.RequestHandler):
     def get(self):
-        bundle = tmBundle(title="系所目錄")
+        
         action = self.request.get('action')
-        bundle.addProperty('list', getFidsWithDepartments())
-        doRender(self, 'wall', bundle)
+        
+        if action == "depart_detail":
+            depart_id = self.request.get("depart_id")
+            if len(depart_id) != 4:
+                bundle=tmBundle(error='系所ID不存在。')
+                doRender(self, 'error', bundle)
+            bundle = tmBundle(title="系所目錄 - %s"%getDepartNameById(depart_id).encode('utf-8'))
+            students = getMembersByDepartId(depart_id, 1)
+            teachers = getMembersByDepartId(depart_id, 0)
+            bundle.addProperty("students", students)
+            bundle.addProperty("teachers", teachers)
+            
+            
+            doRender(self, 'wall_detail', bundle)
+        else:
+            bundle = tmBundle(title="系所目錄")
+            bundle.addProperty('list', getFidsWithDepartments())
+            doRender(self, 'wall', bundle)
         
 class ChatroomPage(webapp.RequestHandler):
     def get(self):
