@@ -12,7 +12,6 @@ class ValidateSchoolAccountHandler(webapp.RequestHandler):
         username_post = self.request.get('username')
         password_post = self.request.get('password')
         result = validateSchoolPOPServer(username_post, password_post)
-        jsonBundle={'result':result}
         
         if result:
             self.response.out.write(json.dumps(result))
@@ -22,16 +21,32 @@ class ValidateSchoolAccountHandler(webapp.RequestHandler):
 class RedirectToFacebookByFIDHandler(webapp.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/html; charset=utf-8';
-        fid = self.request.get('fid')
-        result = urlfetch.fetch(url = 'http://graph.facebook.com/'+fid)
-        graph = json.loads(result.content)
         bundle = tmBundle(title = "轉址中")
+        fid = self.request.get('fid')
+        #result = urlfetch.fetch(url = 'https://graph.facebook.com/'+fid)
+        #graph = json.loads(result.content)
         try:
-            self.redirect(graph['link'])
-        except KeyError,e:
-            logging.info("fid: %s's link doesn't exist. Error code: %s"%(fid,e))
-            bundle.addProperty('title', '發生錯誤')
+            self.redirect("http://www.facebook.com/profile.php?id="+fid)
+        except:
+            bundle.addProperty("error", "頁面遺失。")
             doRender(self, 'error', bundle)
+            
+        """    
+        if 1:
+            graph = facebook.GraphAPI()
+            profile = graph.get_object(fid)
+            try:
+                self.redirect(profile['link'])
+            except KeyError,e:
+                logging.info("fid: %s's link doesn't exist. Error code: %s"%(fid,e))
+                bundle.addProperty('error', str(e))
+                doRender(self, 'error', bundle)
+        else:
+            bundle.addProperty('title', '發生錯誤')
+            bundle.addProperty('error', "Facebook ID發生錯誤，請用正常方式使用本站。")
+            doRender(self, "error", bundle)
+        """   
+        
         
 class CheckUserHandler(webapp.RequestHandler):
     def get(self):
