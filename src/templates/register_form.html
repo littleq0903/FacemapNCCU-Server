@@ -68,11 +68,6 @@
 		
 	});
 
-	FB.init({'apikey':"{{APIKEY}}",
-		'cookie': true,
-		'status': true,
-		'appId':"{{APPID}}",
-		'xfbml': true});
 	FB.getLoginStatus(handleSessionResponse);
 	
 	$('#login').bind('click', function() {
@@ -105,7 +100,7 @@
           },
           function(response) {
             var user = response[0];
-            $('#user-info').html('<img src="' + user.pic + '"><span id=fbname>' + user.name+'</span><br />(Not you?)').show('fast');
+            $('#user-info').html('<img src="' + user.pic + '"><br /><span id=fbname>' + user.name+'</span><br />(Not you?)').show('fast');
             $("#register_form").show('fast');
             $('#login').hide('fast');
             $('#logout').show('fast');
@@ -116,7 +111,7 @@
 </script>
 {% else %}
 {# school not validate, response error message. #}
-<p>Your school account is invalid, please check your username and password.</p>
+<p>您的政治大學學校帳號或是密碼錯誤，請重新輸入。</p>
 <form action=register method=post>
 	<button>Back</button>
 	<input type=hidden name=action value=agree>
