@@ -10,7 +10,7 @@ class EntranceHandler(webapp.RequestHandler):
         self.redirect("/pages/")
         
         
-sitemap = [("/", EntranceHandler)]
+sitemap = [("/.*", EntranceHandler)]
 
 app = webapp.WSGIApplication(sitemap, debug = debugStatus())
 
