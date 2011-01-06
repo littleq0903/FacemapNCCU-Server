@@ -5,13 +5,6 @@
 <script>
 	$(document).ready(function(){
 		
-		FB.init({
-			'xfbml':true,
-			'cookie':true,
-			'status':true,
-			'appId':"{{APPID}}",
-			'apikey':"{{APIKEY}}"
-		});
 		$("#login").bind('click',function(){
 			FB.login(handler);
 			
