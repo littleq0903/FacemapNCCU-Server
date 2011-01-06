@@ -3,6 +3,7 @@
 {% block content %}
 <div id="div_error">
 <p>在處理過程中發生錯誤，請稍後再試。</p>
+<p>錯誤原因：{% firstof error "未知" %}</p>
 <p><a href="/pages/">回首頁</a></p>
 </div>
 
