@@ -2,25 +2,32 @@
 
 
 {% block content %}
-<p>按照學校目錄排序。</p>
-
+<p>按照系所註冊人數排序，大家快點呼朋引伴來註冊吧！</p>
 {# for loop to enumerate each department #}
 {% for depart in list %}
-{% if depart|slice:"2:"%}
-<p style="font-size: 0.75em;width:250px; text-align:right; margin-bottom:-15px">更多</p>
-<h3>{{depart|slice:"1"|first}}</h3>
 
-<input type=hidden value="{{depart|slice:"2"|first}}">
+{% if depart|slice:"3:" %}
+<div class="wall_depart">
+
+<p class="h3_more"><a href="wall?action=depart_detail&depart_id={{depart|slice:"1:"|first}}">更多</a></p>
+<h3>{{depart|first}}（{{depart|slice:"2:"|first}}）</h3>
+
 <div class="memberlist">
 	{# for loop to enumerate each member #}
-	{% for i in depart|slice:"2:" %}
-		<a href="/apis/rediecttofbbyfid?fid={{i}}" style="padding: 0;">
-		<img src="http://graph.facebook.com/{{i}}/picture?size=50x50" width=50 height=50>
-		</a>
+	{% for i in depart|slice:"3:" %}
+		<div class=membercaption>
+			<a href="/apis/rediecttofbbyfid?fid={{i}}" style="padding: 0;">
+				<p><img src="http://graph.facebook.com/{{i}}/picture?size=50x50" width=50 height=50></p>
+				<p class="caption"><fb:name uid="{{i}}" capitalize="true" useyou="false"></fb:name></p>
+			</a>
+		</div>
+		
 	{% endfor %}
 </div>
-
+</div>
 {% endif %}
+
+
 {% endfor %}
 
 
