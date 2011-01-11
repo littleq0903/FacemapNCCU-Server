@@ -86,6 +86,17 @@ body
 	margin-bottom: 15px;
 	padding-bottom: 3px;
 }
+.post h3.h3_sp
+{
+	font-size: 1em;
+	width: 470px;
+	margin-left: 1em;
+	padding-top: 3px;
+	padding-left: 1em;
+	border-radius: 5px;
+	color: white;
+	background-color: #D80000;
+}
 
 #footer
 {
@@ -107,6 +118,10 @@ body
 .memberlist
 {
 	overflow: hidden;
+}
+.memberlist_sp
+{
+	margin-left: 1em;
 }
 
 .memberlist img
@@ -133,13 +148,18 @@ body
 	margin-left: 20px;
 	margin-bottom: 20px;
 }
+
+.membercaption_sp
+{
+	width: 100px;
+}
 .membercaption img
 {
 	border-radius: 10px;
-	-ms-border-radius: 10px;
-	-o-border-radius: 10px;
-	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
+	-o-border-radius: 10px;
+	-ms-border-radius: 10px;
+	-moz-border-radius: 10px;
 	margin-bottom: 5px;
 }
 .membercaption p
@@ -155,11 +175,22 @@ body
 	height: 2em;
 	line-height: 1;
 }
+.membercaption p.caption_sp
+{
+	margin-top: 60px;
+	font-size: 100px;
+}
+
 .wall_depart
 {
 	overflow: hidden;
 	padding-bottom: 10px;
 }
+.wall_depart_sp
+{
+	
+}
+
 .h3_more
 {
 	font-size: 0.75em;

@@ -42,6 +42,9 @@ class RegisterPage(webapp.RequestHandler):
             bundle = tmBundle(title = "註冊 - 完成")
             bundle.addProperty("schoolAccount", schoolid)
             
+            if depart_id[0:2]=="--":
+                bundle.addProperty('error', '選擇系所有誤，請重新註冊步驟。')
+            
             query = database.members.gql("WHERE school_id = :schoolid", schoolid=schoolid)
             results = query.fetch(limit = 1)
              
@@ -102,18 +105,34 @@ class ChatroomPage(webapp.RequestHandler):
         bundle = tmBundle(title="政大塗鴉牆")
         
         
-        doRender(self, 'chatroom_test', bundle)
+        doRender(self, 'chatroom', bundle)
         
 class AboutPage(webapp.RequestHandler):
     def get(self):
         bundle = tmBundle(title="關於Facemap@NCCU")
         doRender(self, 'about', bundle)
+        
+class ClosePopupPage(webapp.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'text/html'
+        self.response.out.write("""
+        <html>
+        <head>
+        </head>
+        <body>
+            <p>感謝您的支持。</p>
+            <p><button onClick="window.close()">關閉視窗</button></p>
+        </body>
+        </html>
+        """)
+        
 
 sitemap = [('/pages/', MainPage),
            ('/pages/register', RegisterPage),
            ('/pages/wall', WallPage),
            ('/pages/chatroom', ChatroomPage),
-           ('/pages/about',AboutPage)]
+           ('/pages/about',AboutPage),
+           ('/pages/closepopup', ClosePopupPage)]
 
 application = webapp.WSGIApplication(sitemap , debug=debugStatus())
 

@@ -4,8 +4,15 @@
 {% if error %}
 <p>錯誤訊息：{{error}}</p>
 {% else %}
+<script>
+function popUp(){
+	var url = "http:\//www.facebook.com/dialog/feed?app_id=142892519093949&display=popup&link=http:\//facemapnccu.appspot.com&name=政大臉書地圖&caption=FaceMap@NCCU - 政大人的Facebook通訊錄&description=政大人的Facebook通訊錄，快點上來看看有哪些朋友還沒有你的Facebook！&message=我剛剛加入了「政大臉書地圖」唷！我的好朋友們也一起來加入吧！&redirect_uri=http:/\/facemapnccu.appspot.com/pages/closepopup";
+	window.open(encodeURI(url),"分享 政大臉書地圖","status=0, width=400, height=100, resizable=0");	
+};
+</script>
 <p>恭喜，註冊成功。</p>
+<p><a class="fb_button fb_button_medium" onClick=popUp()><span class="fb_button_text">分享給政大同學</span></a></p>
 {% endif %}
-<p><a href=/pages/>回首頁</a></p>
+<p><a href="/pages/">回首頁</a></p>
 
 {% endblock %}

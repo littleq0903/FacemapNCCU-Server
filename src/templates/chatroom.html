@@ -1,5 +1,65 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>即將開放，敬請期待！</p>
+
+<script>
+	$(document).ready(function(){
+		
+		$("#login").bind('click',function(){
+			FB.login(handler);
+			
+		});
+		
+		FB.getLoginStatus(handler);
+		FB.Event.subscribe('auth.sessionChange',handler);
+		function clearDisplay(){
+			$("#chatroom_login").hide('fast');
+			$("#chatroom_notlogin").show('fast');
+			$("#chatroom_ask").hide('fast');
+		};
+		
+		function showDisplay(){
+			$("#chatroom_login").show('fast');
+			$("#chatroom_notlogin").hide('fast');
+			$("#chatroom_ask").hide('fast');
+		};
+		function showAskDisplay(){
+			$("#chatroom_login").hide('fast');
+			$("#chatroom_notlogin").hide('fast');
+			$("#chatroom_ask").show('fast');
+		};
+		function handler(response){
+			
+			if(!response.session){
+				clearDisplay();
+				return;
+			};
+		
+			
+			$.get("/apis/checkuser?user="+FB.getSession().uid, function(data){
+				if(data == "1"){
+					showDisplay();
+				};
+				if(data == "0"){
+					showAskDisplay()
+				};
+			});
+			
+		};
+		
+	});
+	
+</script>
+<div id="chatroom_login" style="display: none;">
+	<fb:comments xid="chatroom_facemapnccu" numposts="10" width="500" simple="true" publish_feed="false">
+</fb:comments>
+</div>
+<div id="chatroom_notlogin" style="display: none;">
+	<p><a id=login class="fb_button fb_button_medium"><span class="fb_button_text">登入</span></a>後才能確定是您是不是Facemap@NCCU的使用者唷！</p>
+</div>
+<div id="chatroom_ask" style="display: none;">
+	<p>您還不是Facemap@NCCU的使用者喔，趕快<a href="register">註冊</a>吧！</p>
+</div>
+
+
 {% endblock %}

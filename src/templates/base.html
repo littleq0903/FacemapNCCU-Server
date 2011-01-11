@@ -1,4 +1,5 @@
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://www.facebook.com/2008/fbml">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=UTF-8" /> 
 		<title>政大臉書地圖 - Facemap@NCCU{% if title %} - {{title}}{% endif %}</title>
@@ -13,12 +14,17 @@
 		<link rel="stylesheet" href="/css/basestyle.css" type="text/css" />
 		<script>
 			$(document).ready(function(){
-				FB.init({'apikey':"{{APIKEY}}",
-					'cookie': true,
-					'session':true,
-					'status': true,
-					'appId':"{{APPID}}",
-					'xfbml': true});
+				FB.init({'apikey': "{{APIKEY}}",
+						'appId': "{{APPID}}",
+						'cookie': true,
+						'session': true,
+						'status': true,
+						'xfbml': true});
+				
+				$('#fb-status').html('<fb:profile-pic class=profile-pic uid=loggedinuser facebook-logo="true"></fb:profile-pic>');
+			    if (typeof FB  != "undefined"){
+			        FB.XFBML.parse(document.getElementById('fb-status'))
+			    }
 			});
 			
 		</script>
@@ -36,11 +42,11 @@
 		{% block menubar %}
 		<div class="menu">
 			<ul>
-				<li><a href="/">Home</a></li>
-				<li><a href="register">Register</a></li>
-				<li><a href="wall">Directory</a></li>
-				<li><a href="chatroom">NCCU Wall</a></li>
-				<li><a href="about">About</a></li>
+				<li><a href="/">首頁</a></li>
+				<li><a href="register">註冊</a></li>
+				<li><a href="wall">全校系所</a></li>
+				<li><a href="chatroom">政大塗鴉牆</a></li>
+				<li><a href="about">關於我們</a></li>
 			</ul>
 		</div>
 		{% endblock %}
@@ -51,9 +57,12 @@
 				<p>你現在是...</p>
 				<p>
 					<center>
+						<!-- 
 						<fb:name uid="loggedinuser" capitalize="true" useyou="false" ></fb:name><br>
-						<fb:profile-pic class="profile-pic" width=100 size=small uid="loggedinuser" linked="true" /><br>
-						<fb:login-button show-faces="true" width="200" max-rows="3"></fb:login-button>
+						-->
+						<div id="fb-status"></div>
+						
+						<!-- <fb:login-button show-faces="true" width="200" max-rows="3"></fb:login-button> -->
 					</center>
 				</p>
 			</div>

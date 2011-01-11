@@ -58,12 +58,37 @@ class CheckUserHandler(webapp.RequestHandler):
         else:
             self.response.out.write("0")
         
-            
+class GetProfileByFidHandler(webapp.RequestHandler):
+    def get(self):
+        jsonBundle = getProfileJSONBundle(self)
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write(json.dumps(jsonBundle))
+        
+class GetProfileByAccessTokenHandler(webapp.RequestHandler):
+    def get(self):
+        jsonBundle = getProfileJSONBundle2(self)
+        self.response.headers['Content-Type'] = 'text/plain'
+        self.response.out.write(json.dumps(jsonBundle))
+        
+class GetStudentsByDepartIdHandler(webapp.RequestHandler):
+    def get(self):
+        departid = self.request.get('departid')
+        students_results = database.members.gql("WHERE depart_id = :depart_id", depart_id = departid).fetch(1000)
+        students = [result.fid for result in students_results if result.tors == 1]
+        teachers = [result.fid for result in students_results if result.tors == 0]
+        jsonBundle = {'depart_id': departid, 'students':students, 'teachers': teachers}
+        self.response.headers["Content-Type"] = 'text/plain'
+        self.response.out.write(json.dumps(jsonBundle))
+        
+        
         
 
 sitemap = [('/apis/validateSchool', ValidateSchoolAccountHandler ),
            ('/apis/rediecttofbbyfid', RedirectToFacebookByFIDHandler),
-           ('/apis/checkuser',CheckUserHandler)]
+           ('/apis/checkuser',CheckUserHandler),
+           ('/apis/getprofilebycookie', GetProfileByFidHandler),
+           ('/apis/getprofilebyaccesstoken', GetProfileByAccessTokenHandler),
+           ('/apis/getstudentsbydepartid', GetStudentsByDepartIdHandler)]
 
 application = webapp.WSGIApplication(sitemap, debug=debugStatus())
 

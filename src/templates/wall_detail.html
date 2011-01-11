@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="wall_depart_detail">
+	<p class="h2_more"><a href="wall">回上頁</a></p>
+	<div class="depart_info">
+	<!-- 
+		<h3>系所介紹</h3>
+		<p>test</p>
+	 -->
+	</div>
+	{% if teachers %}
+	<h3>系所教職員</h3>
+	<div class="memberlist">
+			{% for fid in teachers %}
+			<div class=membercaption>
+				<a href="/apis/rediecttofbbyfid?fid={{fid}}" style="padding: 0;">
+					<p><img src="http://graph.facebook.com/{{fid}}/picture?size=50x50" width=50 height=50></p>
+					<p class="caption"><fb:name uid="{{fid}}" capitalize="true" useyou="false"></fb:name></p>
+				</a>
+			</div>
+			{% endfor %}
+	</div>
+	{% endif %}
+	{% if students %}
+	<h3>系所學生</h3>
+	<div class="memberlist">
+			{% for fid in students %}
+			<div class=membercaption>
+				<a href="/apis/rediecttofbbyfid?fid={{fid}}" style="padding: 0;">
+					<p><img src="http://graph.facebook.com/{{fid}}/picture?size=50x50" width=50 height=50></p>
+					<p class="caption"><fb:name uid="{{fid}}" capitalize="true" useyou="false"></fb:name></p>
+				</a>
+			</div>
+			{% endfor %}
+	</div>
+	{% endif %}
+</div>
+{% endblock %}

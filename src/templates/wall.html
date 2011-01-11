@@ -3,6 +3,38 @@
 
 {% block content %}
 <p>按照系所註冊人數排序，大家快點呼朋引伴來註冊吧！</p>
+{# 特殊專區 #}
+<div class="wall_depart wall_depart_sp">
+	<h3 class="h3_sp">特別收錄</h3>
+	<div class="memberlist memberlist_sp">
+		<div class="membercaption membercaption_sp">
+			<a href="/apis/rediecttofbbyfid?fid=100001647385146" style="padding: 0;">
+				
+				<!--
+				<fb:profile-pic uid="100001647385146" width=100 height=100 size=normal linked="true" />
+				-->
+				 
+				<p><img src="http://graph.facebook.com/100001647385146/picture?type=large&size=100x100" width=100 height=100></p>
+				</a>
+				<!--
+				<caption class="caption caption_sp">
+				閔陳輝
+				-->
+				
+				<fb:name uid="100001647385146" capitalize="true" useyou="false"></fb:name>
+			<!--  </a> -->
+		</div>
+	</div>
+</div>
+
+
+
+
+
+
+
+
+
 {# for loop to enumerate each department #}
 {% for depart in list %}
 

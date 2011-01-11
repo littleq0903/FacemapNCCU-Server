@@ -88,13 +88,16 @@ def getDepartOptions():
     data = json.loads(open("departlist.json").read())
     html = ""
     for college in data.keys():
-        html+= '<option disabled>----------'+data[college]['name']+'----------</option>\n'
+        html+= '<option disabled>--'+data[college]['name']+'</option>\n'
+        k=0
         for depart in data[college].keys():
             if depart == 'name':    
                 continue
-            html += '<option value="%s">%s</option>\n'%(college+depart, data[college][depart])
-    
-    
+            if k == 1:
+                html += '<option value="%s">%s</option>\n'%(college+depart, data[college][depart])
+            else:
+                html += '<option selected value="%s">%s</option>\n'%(college+depart, data[college][depart])
+                k = 1
     return html
             
             
@@ -157,4 +160,70 @@ def getDepartNameById(depart_id):
         return None
     else:
         return depart_name
+    
+def getProfileJSONBundle(self):
+    facebookUser = facebook.get_user_from_cookie(self.request.cookies, facebook_APP_ID, facebook_APP_SECRET)
+    #if not facebookUser:
+    #    graph = facebook.GraphAPI(self.request.get('accesstoken'))
+    #    facebookUser = 1
+    jsonBundle = {}
+    if facebookUser:
+        #if facebookUser != 1:
+        graph = facebook.GraphAPI(facebookUser['access_token'])
+        
+        
+        profile = graph.get_object('me')
+        items = ['first_name', 'last_name', 'gender']
+        for item in items:
+            jsonBundle[item] = profile[item]
+        #jsonBundle['picture'] = graph.get_connections("me", "picture")
+        picture_url = "http://graph.facebook.com/" + profile['id'] +"/picture"
+        jsonBundle['picture'] = picture_url
+        
+        query = database.members.gql("WHERE fid = :fid", fid = profile['id'])
+        result = query.fetch(1)[0]
+        
+        if result:
+            jsonBundle['isMember'] = True
+            jsonBundle['depart_id'] = result.depart_id
+            jsonBundle['school_id'] = result.school_id
+        else:
+            jsonBundle['isMember'] = False
+    else:
+        jsonBundle['error']= "Couldn't find cookie."
+
+    
+    return jsonBundle
+    
+def getProfileJSONBundle2(self):
+
+    jsonBundle = {}
+    if self.request.get('accesstoken'):
+        graph = facebook.GraphAPI(self.request.get('accesstoken'))
+
+        profile = graph.get_object('me')
+        items = ['first_name', 'last_name', 'gender']
+        for item in items:
+            jsonBundle[item] = profile[item]
+        #jsonBundle['picture'] = graph.get_connections("me", "picture")
+        picture_url = "http://graph.facebook.com/" + profile['id'] +"/picture"
+        jsonBundle['picture'] = picture_url
+        
+        query = database.members.gql("WHERE fid = :fid", fid = profile['id'])
+        result = query.fetch(1)[0]
+        
+        if result:
+            jsonBundle['isMember'] = True
+            jsonBundle['depart_id'] = result.depart_id
+            jsonBundle['school_id'] = result.school_id
+            jsonBundle['depart'] = getDepartNameById(result.depart_id)
+        else:
+            jsonBundle['isMember'] = False
+    else:
+        jsonBundle['error']= "Couldn't find cookie."
+
+    
+    return jsonBundle
+    
+    
     
