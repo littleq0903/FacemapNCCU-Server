@@ -4,16 +4,14 @@ from google.appengine.api import urlfetch
 from google.appengine.ext import db
 from google.appengine.api import memcache
 from django.utils import simplejson as json
+from facebookKey import *
 import database
 import facebook
 import urllib
 import logging
 import random
 
-# Information of facebook api key.
-facebook_API_KEY = '434c87a5cf8faac117f53eccc9a3e335'
-facebook_APP_ID = '142892519093949'
-facebook_APP_SECRET= '963cf12901646fff05b64248712186b2'
+
 
 class tmBundle(dict):
     """ Bundle to render template with custom data. """
